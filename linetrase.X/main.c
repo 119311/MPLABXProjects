@@ -107,9 +107,9 @@ void SetMotorValue(const uint8_t x[LED_NUM], int16_t y[MOTOR_NUM])
 }
 void MotorOut(const int8_t y[MOTOR_NUM])
 {
+	int8_t motor_left = MAP(y[MOTOR_LEFT]), motor_right = MAP(y[MOTOR_RIGHT]);
 	//-128 ~ -17 で後退,-16 ~ 15でブレーキ(0は空転), 16 ~ 127で前進
 	//ここ未完成なので回路と相談
-	int8_t motor_left = MAP(y[MOTOR_LEFT]), motor_right = MAP(y[MOTOR_RIGHT]);
 	for (size_t i = 0; i < MOTOR_RIGHT; i++)
 		MOTOR_WRITE_PWM(y[i], i);
 	return;
