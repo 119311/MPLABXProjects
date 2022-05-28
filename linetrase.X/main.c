@@ -110,10 +110,14 @@ void MotorOut(const int8_t y[MOTOR_NUM])
 	//-128~-17で後退,-16~15でブレーキ(0は空転)16~128で前進
 	int8_t motor_left = MAP(y[MOTOR_LEFT]), motor_right = MAP(y[MOTOR_RIGHT]);
 	for (size_t i = 0; i < MOTOR_RIGHT; i++)
-		MOTOR_WRIGHT_PWM(y[i]);
+		MOTOR_WRITE_PWM(y[i], i);
 	return;
 }
 // void TMR0_Interrupt(void)
 // {
 // 	flag *= -1;
 // }
+void MOTOR_WRITE_PWM(const int8_t y[MOTOR_NUM], const uint8_t y)
+{
+	; // flag *= -1;
+}
