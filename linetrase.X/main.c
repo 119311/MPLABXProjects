@@ -35,8 +35,8 @@ void main(void)
 	//-128~-17で後退,-16~15でブレーキ(0は空転)16~128で前進
 	while (1)
 	{
-		//ここに割込み追記
-		ReadLedBar(ledBar);
+		if (flag == 1)
+			ReadLedBar(ledBar);
 		SetMotorValue(ledBar, motorOrder);
 		MotorOut(motorOrder);
 	}
