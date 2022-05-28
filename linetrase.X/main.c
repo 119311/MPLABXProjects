@@ -29,9 +29,63 @@ void ReadLedBar(uint8_t x[LED_NUM])
 		x[i] = ADC_GetConversion(i) >> 8;
 	return;
 }
-void SetMotorValue(const uint8_t x[LED_NUM], int8_t y[MOTOR_NUM])
+void SetMotorValue(const uint8_t x[LED_NUM], int16_t y[MOTOR_NUM])
 {
-  return;
+	bool left_line_crossed = LINE_CROSSED(x, LED_LEFT_2), right_line_crossed = LINE_CROSSED(x, LED_RIGHT_1), right_double_line = LINE_CROSSED(x, LED_RIGHT_1) && LINE_CROSSED(x, LED_RIGHT_2), left_double_line = LINE_CROSSED(x, LED_LEFT_1) && LINE_CROSSED(x, LED_LEFT_2);
+	static bool crank_coming = false, lane_change_coming = false;
+	static uint8_t crank_possibly = 0, lane_change_possibly = 0, crank_postponement = 0, lane_change_postponement = 0;
+
+	crank_possibly = SUB(crank_possibly);
+	lane_change_possibly = SUB(lane_change_possibly);
+
+	if (left_double_line)
+	{
+		if (right_double_line)
+			if (lane_change_possibly < LANE_CHANGE_POSSIBLY)
+				lane_change_possibly += LANE_CHANGE_POSSIBLY;
+			else
+				lane_change_coming = true;
+		else
+		{
+			if (crank_possibly < CRANK_POSSIBLY)
+				crank_possibly += CRANK_POSSIBLY;
+			else
+				crank_coming = true;
+		}
+	}
+	if (lane_change_coming)
+		lane_change_postponement++;
+	if (crank_coming)
+		crank_postponement++;
+
+	if (lane_change_postponement > LANE_CHANGE_POSTPONEMENT)
+	{
+		lane_change_coming = false;
+		y[MOTOR_LEFT] += 32;
+		// y[MOTOR_RIGHT] -= 30;
+		return;
+	}
+	if (crank_postponement > CRANK_POSTPONEMENT)
+	{
+		crank_coming = false;
+		y[MOTOR_LEFT] = -32;
+		y[MOTOR_RIGHT] = 30;
+		return;
+	}
+	if (left_line_crossed)
+	{
+		y[MOTOR_LEFT] -= 10;
+		y[MOTOR_RIGHT] += 10;
+		return;
+	}
+	if (right_line_crossed)
+	{
+		y[MOTOR_LEFT] += 10;
+		y[MOTOR_RIGHT] -= 10;
+		return;
+	}
+	y[MOTOR_LEFT] += 10;
+	y[MOTOR_RIGHT] += 10;
 }
 void MotorOut(const int8_t y[MOTOR_NUM])
 {
