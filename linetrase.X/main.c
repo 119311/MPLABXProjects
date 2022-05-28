@@ -28,6 +28,8 @@ void main(void)
 {
 	SYSTEM_Initialize();
 	INTERRUPT_PeripheralInterruptEnable();
+	TMR0_SetInterruptHandler(TMR0_Interrupt);
+	INTERRUPT_GlobalInterruptEnable();
 	uint8_t ledBar[LED_NUM] = {0};
 	int16_t motorOrder[MOTOR_NUM] = {64, 64};
 	//-128~-17で後退,-16~15でブレーキ(0は空転)16~128で前進
@@ -105,5 +107,9 @@ void SetMotorValue(const uint8_t x[LED_NUM], int16_t y[MOTOR_NUM])
 }
 void MotorOut(const int8_t y[MOTOR_NUM])
 {
-  return;
+	//-128~-17で後退,-16~15でブレーキ(0は空転)16~128で前進
+	int8_t motor_left = MAP(y[MOTOR_LEFT]), motor_right = MAP(y[MOTOR_RIGHT]);
+	for (size_t i = 0; i < MOTOR_RIGHT; i++)
+		MOTOR_WRIGHT_PWM(y[i]);
+	return;
 }
