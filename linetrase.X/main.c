@@ -117,7 +117,15 @@ void MotorOut(const int8_t y[MOTOR_NUM])
 // {
 // 	flag *= -1;
 // }
-void MOTOR_WRITE_PWM(const int8_t y[MOTOR_NUM], const uint8_t y)
+void MOTOR_WRITE_PWM(const int8_t y[MOTOR_NUM], const uint8_t i, const uint8_t port)
 {
-	; // flag *= -1;
+	switch (port)
+	{
+	case 3:
+		PWM3_LoadDutyValue(y[i]);
+		break;
+
+	default:
+		break;
+	}
 }
