@@ -8,28 +8,20 @@ void ReadLedBar(uint8_t x[LED_NUM]);
 void SetMotorValue(const uint8_t x[LED_NUM], int8_t y[MOTOR_NUM]);
 void MotorOut(const int8_t y[MOTOR_NUM]);
 
-typedef enum
-{
-  Led_Left_1,
-  Led_Left_2,
-  Led_Right_1,
-  Led_Right_2,
-  // Led_Left_1, Led_Left_2, Led_Right_1, Led_Right_2 の順で配置
-} LedBar;
-
 void main(void)
 {
-  SYSTEM_Initialize();
-  INTERRUPT_PeripheralInterruptEnable();
-  uint8_t ledBar[LED_NUM] = {0}; // LedBarStatus
-  int8_t motorOrder[MOTOR_NUM] = {0};
-  while (1)
-  {
-    //ここに割込み追記
-    ReadLedBar(ledBar);
-    SetMotorValue(ledBar, motorOrder);
-    MotorOut(motorOrder);
-  }
+	SYSTEM_Initialize();
+	INTERRUPT_PeripheralInterruptEnable();
+	uint8_t ledBar[LED_NUM] = {0};
+	int16_t motorOrder[MOTOR_NUM] = {64, 64};
+	//-128~-17で後退,-16~15でブレーキ(0は空転)16~128で前進
+	while (1)
+	{
+		//ここに割込み追記
+		ReadLedBar(ledBar);
+		SetMotorValue(ledBar, motorOrder);
+		MotorOut(motorOrder);
+	}
 }
 void ReadLedBar(uint8_t x[LED_NUM])
 {
