@@ -2,7 +2,23 @@
 #include "mcc_generated_files/mcc.h"
 
 #define LED_NUM 4
+#define JUDGMENT_NUM 4
 #define MOTOR_NUM 2
+#define LED_THRESHOLD 71
+#define LED_LEFT_1 0
+#define LED_LEFT_2 1
+#define LED_RIGHT_1 2
+#define LED_RIGHT_2 3
+// LED_LEFT_1, LED_LEFT_2, LED_RIGHT_1, LED_RIGHT_2 の順で配置
+#define MOTOR_LEFT 0
+#define MOTOR_RIGHT 1
+#define CRANK_POSSIBLY 3
+#define LANE_CHANGE_POSSIBLY 3
+#define LANE_CHANGE_POSTPONEMENT 6
+#define CRANK_POSTPONEMENT 6
+#define LINE_CROSSED(x, i) (x[i] < LED_THRESHOLD)
+#define SUB(x) ((x == 0) ? (0) : (x - 1))
+#define MAP(x) ((x > INT8_MAX) ? (INT8_MAX) : ((x < INT8_MIN) ? (INT8_MIN) : (x)))
 
 void ReadLedBar(uint8_t x[LED_NUM]);
 void SetMotorValue(const uint8_t x[LED_NUM], int8_t y[MOTOR_NUM]);
