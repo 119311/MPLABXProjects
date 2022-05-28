@@ -28,7 +28,7 @@ void main(void)
 {
 	SYSTEM_Initialize();
 	INTERRUPT_PeripheralInterruptEnable();
-	TMR0_SetInterruptHandler(TMR0_Interrupt);
+	// TMR0_SetInterruptHandler(TMR0_Interrupt);
 	INTERRUPT_GlobalInterruptEnable();
 	uint8_t ledBar[LED_NUM] = {0};
 	int16_t motorOrder[MOTOR_NUM] = {64, 64};
@@ -113,3 +113,7 @@ void MotorOut(const int8_t y[MOTOR_NUM])
 		MOTOR_WRIGHT_PWM(y[i]);
 	return;
 }
+// void TMR0_Interrupt(void)
+// {
+// 	flag *= -1;
+// }
