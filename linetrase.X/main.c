@@ -25,9 +25,9 @@ void main(void)
 }
 void ReadLedBar(uint8_t x[LED_NUM])
 {
-  for (uint8_t i = channel_AN0; i <= channel_AN3; i++)
-    x[i] = ADC_GetConversion(i) >> 8;
-  return;
+	for (uint8_t i = channel_AN0; i <= channel_AN3; i++)
+		x[i] = ADC_GetConversion(i) >> 8;
+	return;
 }
 void SetMotorValue(const uint8_t x[LED_NUM], int8_t y[MOTOR_NUM])
 {
