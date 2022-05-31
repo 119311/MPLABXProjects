@@ -1,11 +1,15 @@
 /**
   @Generated PIC10 / PIC12 / PIC16 / PIC18 MCUs Header File
+
   @Company:
     Microchip Technology Inc.
+
   @File Name:
     mcc.h
+
   @Summary:
     This is the mcc.h file generated using PIC10 / PIC12 / PIC16 / PIC18 MCUs
+
   @Description:
     This header file provides implementations for driver APIs for all modules selected in the GUI.
     Generation Information :
@@ -16,27 +20,32 @@
         Compiler          :  XC8 2.31 and above or later
         MPLAB             :  MPLAB X 5.45
 */
+
 /*
-    (c) 2018 Microchip Technology Inc. and its subsidiaries.
-    Subject to your compliance with these terms, you may use Microchip software and any
-    derivatives exclusively with Microchip products. It is your responsibility to comply with third party
-    license terms applicable to your use of third party software (including open source software) that
+    (c) 2018 Microchip Technology Inc. and its subsidiaries. 
+    
+    Subject to your compliance with these terms, you may use Microchip software and any 
+    derivatives exclusively with Microchip products. It is your responsibility to comply with third party 
+    license terms applicable to your use of third party software (including open source software) that 
     may accompany Microchip software.
-    THIS SOFTWARE IS SUPPLIED BY MICROCHIP "AS IS". NO WARRANTIES, WHETHER
-    EXPRESS, IMPLIED OR STATUTORY, APPLY TO THIS SOFTWARE, INCLUDING ANY
-    IMPLIED WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY, AND FITNESS
+    
+    THIS SOFTWARE IS SUPPLIED BY MICROCHIP "AS IS". NO WARRANTIES, WHETHER 
+    EXPRESS, IMPLIED OR STATUTORY, APPLY TO THIS SOFTWARE, INCLUDING ANY 
+    IMPLIED WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY, AND FITNESS 
     FOR A PARTICULAR PURPOSE.
-    IN NO EVENT WILL MICROCHIP BE LIABLE FOR ANY INDIRECT, SPECIAL, PUNITIVE,
-    INCIDENTAL OR CONSEQUENTIAL LOSS, DAMAGE, COST OR EXPENSE OF ANY KIND
-    WHATSOEVER RELATED TO THE SOFTWARE, HOWEVER CAUSED, EVEN IF MICROCHIP
-    HAS BEEN ADVISED OF THE POSSIBILITY OR THE DAMAGES ARE FORESEEABLE. TO
-    THE FULLEST EXTENT ALLOWED BY LAW, MICROCHIP'S TOTAL LIABILITY ON ALL
-    CLAIMS IN ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT
-    OF FEES, IF ANY, THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS
+    
+    IN NO EVENT WILL MICROCHIP BE LIABLE FOR ANY INDIRECT, SPECIAL, PUNITIVE, 
+    INCIDENTAL OR CONSEQUENTIAL LOSS, DAMAGE, COST OR EXPENSE OF ANY KIND 
+    WHATSOEVER RELATED TO THE SOFTWARE, HOWEVER CAUSED, EVEN IF MICROCHIP 
+    HAS BEEN ADVISED OF THE POSSIBILITY OR THE DAMAGES ARE FORESEEABLE. TO 
+    THE FULLEST EXTENT ALLOWED BY LAW, MICROCHIP'S TOTAL LIABILITY ON ALL 
+    CLAIMS IN ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT 
+    OF FEES, IF ANY, THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS 
     SOFTWARE.
 */
+
 #ifndef MCC_H
-#define MCC_H
+#define	MCC_H
 #include <xc.h>
 #include "device_config.h"
 #include "pin_manager.h"
@@ -47,7 +56,8 @@
 #include "pwm3.h"
 #include "tmr2.h"
 #include "pwm4.h"
-#include "adc.h"
+
+
 
 /**
  * @Param
@@ -61,6 +71,7 @@
     SYSTEM_Initialize(void);
  */
 void SYSTEM_Initialize(void);
+
 /**
  * @Param
     none
@@ -85,7 +96,8 @@ void OSCILLATOR_Initialize(void);
     WDT_Initialize(void);
  */
 void WDT_Initialize(void);
-#endif /* MCC_H */
+
+#endif	/* MCC_H */
 /**
  End of File
 */
