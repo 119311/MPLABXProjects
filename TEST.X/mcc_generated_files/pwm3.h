@@ -1,141 +1,140 @@
- /**
-   PWM3 Generated Driver API Header File
- 
-   @Company
-     Microchip Technology Inc. 
+/**
+  PWM3 Generated Driver API Header File
 
-   @File Name
-    pwm3.h
+  @Company
+	Microchip Technology Inc.
 
-   @Summary
-     This is the generated header file for the PWM3 driver using PIC10 / PIC12 / PIC16 / PIC18 MCUs
- 
-   @Description
-     This header file provides APIs for driver for PWM3.
-     Generation Information :
-         Product Revision  :  PIC10 / PIC12 / PIC16 / PIC18 MCUs - 1.81.7
-         Device            :  PIC16F1778
-         Driver Version    :  2.01
-     The generated drivers are tested against the following:
-         Compiler          :  XC8 2.31 and above or later
-         MPLAB             :  MPLAB X 5.45
- */
+  @File Name
+   pwm3.h
+
+  @Summary
+	This is the generated header file for the PWM3 driver using PIC10 / PIC12 / PIC16 / PIC18 MCUs
+
+  @Description
+	This header file provides APIs for driver for PWM3.
+	Generation Information :
+		Product Revision  :  PIC10 / PIC12 / PIC16 / PIC18 MCUs - 1.81.7
+		Device            :  PIC16F1778
+		Driver Version    :  2.01
+	The generated drivers are tested against the following:
+		Compiler          :  XC8 2.31 and above or later
+		MPLAB             :  MPLAB X 5.45
+*/
 
 /*
-    (c) 2018 Microchip Technology Inc. and its subsidiaries. 
-    
-    Subject to your compliance with these terms, you may use Microchip software and any 
-    derivatives exclusively with Microchip products. It is your responsibility to comply with third party 
-    license terms applicable to your use of third party software (including open source software) that 
-    may accompany Microchip software.
-    
-    THIS SOFTWARE IS SUPPLIED BY MICROCHIP "AS IS". NO WARRANTIES, WHETHER 
-    EXPRESS, IMPLIED OR STATUTORY, APPLY TO THIS SOFTWARE, INCLUDING ANY 
-    IMPLIED WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY, AND FITNESS 
-    FOR A PARTICULAR PURPOSE.
-    
-    IN NO EVENT WILL MICROCHIP BE LIABLE FOR ANY INDIRECT, SPECIAL, PUNITIVE, 
-    INCIDENTAL OR CONSEQUENTIAL LOSS, DAMAGE, COST OR EXPENSE OF ANY KIND 
-    WHATSOEVER RELATED TO THE SOFTWARE, HOWEVER CAUSED, EVEN IF MICROCHIP 
-    HAS BEEN ADVISED OF THE POSSIBILITY OR THE DAMAGES ARE FORESEEABLE. TO 
-    THE FULLEST EXTENT ALLOWED BY LAW, MICROCHIP'S TOTAL LIABILITY ON ALL 
-    CLAIMS IN ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT 
-    OF FEES, IF ANY, THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS 
-    SOFTWARE.
+	(c) 2018 Microchip Technology Inc. and its subsidiaries.
+
+	Subject to your compliance with these terms, you may use Microchip software and any
+	derivatives exclusively with Microchip products. It is your responsibility to comply with third party
+	license terms applicable to your use of third party software (including open source software) that
+	may accompany Microchip software.
+
+	THIS SOFTWARE IS SUPPLIED BY MICROCHIP "AS IS". NO WARRANTIES, WHETHER
+	EXPRESS, IMPLIED OR STATUTORY, APPLY TO THIS SOFTWARE, INCLUDING ANY
+	IMPLIED WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY, AND FITNESS
+	FOR A PARTICULAR PURPOSE.
+
+	IN NO EVENT WILL MICROCHIP BE LIABLE FOR ANY INDIRECT, SPECIAL, PUNITIVE,
+	INCIDENTAL OR CONSEQUENTIAL LOSS, DAMAGE, COST OR EXPENSE OF ANY KIND
+	WHATSOEVER RELATED TO THE SOFTWARE, HOWEVER CAUSED, EVEN IF MICROCHIP
+	HAS BEEN ADVISED OF THE POSSIBILITY OR THE DAMAGES ARE FORESEEABLE. TO
+	THE FULLEST EXTENT ALLOWED BY LAW, MICROCHIP'S TOTAL LIABILITY ON ALL
+	CLAIMS IN ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT
+	OF FEES, IF ANY, THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS
+	SOFTWARE.
 */
 
 #ifndef PWM3_H
- #define PWM3_H
- 
- /**
-   Section: Included Files
- */
+#define PWM3_H
 
- #include <xc.h>
- #include <stdint.h>
+/**
+  Section: Included Files
+*/
 
- #ifdef __cplusplus  // Provide C++ Compatibility
+#include <xc.h>
+#include <stdint.h>
 
-     extern "C" {
+#ifdef __cplusplus // Provide C++ Compatibility
 
- #endif
+extern "C"
+{
 
- /**
-   Section: Macro Declarations
- */
+#endif
 
- #define PWM3_INITIALIZE_DUTY_VALUE    0
+	/**
+	  Section: Macro Declarations
+	*/
 
- /**
-   Section: PWM Module APIs
- */
+#define PWM3_INITIALIZE_DUTY_VALUE 0
 
- /**
-   @Summary
-     Initializes the PWM3
+	/**
+	  Section: PWM Module APIs
+	*/
 
-   @Description
-     This routine initializes the EPWM3_Initialize
-     This routine must be called before any other PWM3 routine is called.
-     This routine should only be called once during system initialization.
+	/**
+	  @Summary
+		Initializes the PWM3
 
-   @Preconditions
-     None
+	  @Description
+		This routine initializes the EPWM3_Initialize
+		This routine must be called before any other PWM3 routine is called.
+		This routine should only be called once during system initialization.
 
-   @Param
-     None
+	  @Preconditions
+		None
 
-   @Returns
-     None
+	  @Param
+		None
 
-   @Comment
-     
+	  @Returns
+		None
 
-  @Example
-     <code>
-     uint16_t dutycycle;
+	  @Comment
 
-     PWM3_Initialize();
-     PWM3_LoadDutyValue(dutycycle);
-     </code>
-  */
- void PWM3_Initialize(void);
 
- /**
-   @Summary
-     Loads 16-bit duty cycle.
+	 @Example
+		<code>
+		uint16_t dutycycle;
 
-   @Description
-     This routine loads the 16 bit duty cycle value.
+		PWM3_Initialize();
+		PWM3_LoadDutyValue(dutycycle);
+		</code>
+	 */
+	void PWM3_Initialize(void);
 
-   @Preconditions
-     PWM3_Initialize() function should have been called 
-         before calling this function.
+	/**
+	  @Summary
+		Loads 16-bit duty cycle.
 
-   @Param
-     Pass 16bit duty cycle value.
+	  @Description
+		This routine loads the 16 bit duty cycle value.
 
-   @Returns
-     None
+	  @Preconditions
+		PWM3_Initialize() function should have been called
+			before calling this function.
 
-   @Example
-     <code>
-     uint16_t dutycycle;
+	  @Param
+		Pass 16bit duty cycle value.
 
-     PWM3_Initialize();
-     PWM3_LoadDutyValue(dutycycle);
-     </code>
- */
- void PWM3_LoadDutyValue(uint16_t dutyValue);
+	  @Returns
+		None
 
- 
- #ifdef __cplusplus  // Provide C++ Compatibility
+	  @Example
+		<code>
+		uint16_t dutycycle;
 
-     }
+		PWM3_Initialize();
+		PWM3_LoadDutyValue(dutycycle);
+		</code>
+	*/
+	void PWM3_LoadDutyValue(uint16_t dutyValue);
 
- #endif
+#ifdef __cplusplus // Provide C++ Compatibility
+}
 
- #endif	//PWM3_H
- /**
-  End of File
- */
+#endif
+
+#endif // PWM3_H
+/**
+ End of File
+*/

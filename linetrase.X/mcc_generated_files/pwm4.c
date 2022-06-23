@@ -1,20 +1,20 @@
 /**
   PWM4 Generated Driver File
   @Company
-    Microchip Technology Inc.
+	Microchip Technology Inc.
   @File Name
-    pwm4.c
+	pwm4.c
   @Summary
-    This is the generated driver implementation file for the PWM4 driver using PIC10 / PIC12 / PIC16 / PIC18 MCUs
+	This is the generated driver implementation file for the PWM4 driver using PIC10 / PIC12 / PIC16 / PIC18 MCUs
   @Description
-    This source file provides implementations for driver APIs for PWM4.
-    Generation Information :
-        Product Revision  :  PIC10 / PIC12 / PIC16 / PIC18 MCUs - 1.81.7
-        Device            :  PIC16F1778
-        Driver Version    :  2.01
-    The generated drivers are tested against the following:
-        Compiler          :  XC8 2.31 and above or later
-        MPLAB             :  MPLAB X 5.45
+	This source file provides implementations for driver APIs for PWM4.
+	Generation Information :
+		Product Revision  :  PIC10 / PIC12 / PIC16 / PIC18 MCUs - 1.81.7
+		Device            :  PIC16F1778
+		Driver Version    :  2.01
+	The generated drivers are tested against the following:
+		Compiler          :  XC8 2.31 and above or later
+		MPLAB             :  MPLAB X 5.45
 */
 /*
    (c) 2018 Microchip Technology Inc. and its subsidiaries.
@@ -45,22 +45,22 @@
 */
 void PWM4_Initialize(void)
 {
-  // Set the PWM to the options selected in the PIC10 / PIC12 / PIC16 / PIC18 MCUs.
-  // PWM4POL active_hi; PWM4EN enabled;
-  PWM4CON = 0x80;
-  // DC 0;
-  PWM4DCH = 0x00;
-  // DC 0;
-  PWM4DCL = 0x00;
-  // Select timer
-  CCPTMRS2bits.P4TSEL = 0;
+	// Set the PWM to the options selected in the PIC10 / PIC12 / PIC16 / PIC18 MCUs.
+	// PWM4POL active_hi; PWM4EN enabled;
+	PWM4CON = 0x80;
+	// DC 0;
+	PWM4DCH = 0x00;
+	// DC 0;
+	PWM4DCL = 0x00;
+	// Select timer
+	CCPTMRS2bits.P4TSEL = 0;
 }
 void PWM4_LoadDutyValue(uint16_t dutyValue)
 {
-  // Writing to 8 MSBs of PWM duty cycle in PWMDCH register
-  PWM4DCH = (dutyValue & 0x03FC) >> 2;
-  // Writing to 2 LSBs of PWM duty cycle in PWMDCL register
-  PWM4DCL = (dutyValue & 0x0003) << 6;
+	// Writing to 8 MSBs of PWM duty cycle in PWMDCH register
+	PWM4DCH = (dutyValue & 0x03FC) >> 2;
+	// Writing to 2 LSBs of PWM duty cycle in PWMDCL register
+	PWM4DCL = (dutyValue & 0x0003) << 6;
 }
 /**
  End of File
