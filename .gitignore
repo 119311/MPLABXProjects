@@ -12,3 +12,14 @@
 
 # Built Visual Studio Code Extensions
 *.vsix
+
+# Ignore list for Eagle, a PCB layout tool
+
+# Backup files
+*.s#?
+*.b#?
+*.l#?
+*.b$?
+*.s$?
+*.l$?
+.$fig2.drawio.bkp
