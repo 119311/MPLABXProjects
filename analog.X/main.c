@@ -8,16 +8,16 @@
 
 void main(void)
 {
-  SYSTEM_Initialize();
-  INTERRUPT_GlobalInterruptEnable();
-  INTERRUPT_PeripheralInterruptEnable();
-  LATB = PIN_INIT;
-  while (1)
-  {
-    if (!PORTAbits.RA0)
-      LATB = 0xff;
-    if (PORTAbits.RA0)
-      LATB = 0x00;
-    __delay_ms(10);
-  }
+	SYSTEM_Initialize();
+	INTERRUPT_GlobalInterruptEnable();
+	INTERRUPT_PeripheralInterruptEnable();
+	LATB = PIN_INIT;
+	while (1)
+	{
+		if (!PORTAbits.RA0)
+			LATB = 0xff;
+		if (PORTAbits.RA0)
+			LATB = 0x00;
+		__delay_ms(10);
+	}
 }

@@ -1,78 +1,96 @@
+#include <stdbool.h>
 #include <stdio.h>
 #include "mcc_generated_files/mcc.h"
 
-#define LED_NUM 4
-#define JUDGMENT_NUM 4
-#define MOTOR_NUM 2
-#define LED_THRESHOLD 71
-#define LED_LEFT_1 0
-#define LED_LEFT_2 1
-#define LED_RIGHT_1 2
-#define LED_RIGHT_2 3
+#define INCREMENTAL 16
 
-#define MOTOR_LEFT 0
-#define MOTOR_RIGHT 1
-#define CRANK_POSSIBLY 3
-#define LANE_CHANGE_POSSIBLY 3
-#define LANE_CHANGE_POSTPONEMENT 6
-#define CRANK_POSTPONEMENT 6
+#define LEFT_LINE_CROSSED PORTAbits.RA2
+#define RIGHT_LINE_CROSSED PORTAbits.RA3
+#define SEL11 PORTCbits.RC1
+#define SEL12 PORTCbits.RC3
+#define SEL21 PORTCbits.RC4
+#define SEL22 PORTCbits.RC6
+#define CCP1 PORTCbits.RC2
+#define CCP2 PORTCbits.RC5
 
-#define LINE_CROSSED(x, i) (x[i] < LED_THRESHOLD)
-#define SUB(x) ((x == 0) ? (0) : (x - 1))
-#define MAP(x) ((x > (INT8_MAX)) ? (INT8_MAX) : ((x < (INT8_MIN)) ? (INT8_MIN) : (x)))
+#define SUB(x) ((0 == x) ? (0) : (x - 1))
+#define ABS(x) ((0 < x) ? (x) : (-x))
+#define ROUNDtoINT8(x) ((INT8_MAX < x) ? (INT8_MAX) : ((x < INT8_MIN) ? (INT8_MIN) : (x)))
 
+void SetMotorOrder(int16_t motorOrder[2]);
+void RunMotor(const uint8_t motorNum, const int8_t value);
 void main(void)
 {
-  SYSTEM_Initialize();
+	SYSTEM_Initialize();
+	int16_t motorOrder[2] = {64, 64};
+	int8_t motor[2] = {0};
+	while (true)
+	{
+		SetMotorOrder(motorOrder);
+		motor[0] = ROUNDtoINT8(motorOrder[0]);
+		motor[1] = ROUNDtoINT8(motorOrder[1]);
+		for (size_t i = 0; i < 2; i++)
+			RunMotor(i, motor[i]);
+		__delay_ms(1);
+	}
+}
+void SetMotorOrder(int16_t motorOrder[2])
+{
+	/**
+	 * @brief get position from line sensor and set motorOrder
+	 * @param motorOrder[2]
+	 * @return void
+	 * @note	motorOrder[0] is left motor, motorOrder[1] is right motor
+	 * @note	motorOrder[0] is positive if forward, negative if backward
+	 * @note	motorOrder[1] is positive if forward, negative if backward
+	 */
+	if (LEFT_LINE_CROSSED)
+		motorOrder[0] -= INCREMENTAL, motorOrder[1] += INCREMENTAL;
+	else if (RIGHT_LINE_CROSSED)
+		motorOrder[0] += INCREMENTAL, motorOrder[1] -= INCREMENTAL;
+	else
+		motorOrder[0] += INCREMENTAL, motorOrder[1] += INCREMENTAL;
+}
+void RunMotor(const uint8_t motorNum, const int8_t value)
+{
+	/**
+	 * @brief run motor with designated time
+	 * @param motorNum
+	 * @param value
+	 * @return void
+	 * @note	motorNum is 0 or 1
+	 * @note	value is positive if forward, negative if backward
+	 * @note	motorOrder[0] is left motor, motorOrder[1] is right motor
+	 * @note	motorOrder[0] is positive if forward, negative if backward
+	 * @note	motorOrder[1] is positive if forward, negative if backward
+	 */
+	static size_t timer = 0;
+	if (timer)
+	{
+		timer--;
+		if (!timer)
+			CCP1 = LOW, CCP2 = LOW;
+	}
+	else
+	{
+		timer = ABS(value);
+		switch (motorNum)
+		{
+		case 0:
 
-  int16_t motorOrder[MOTOR_NUM] = {64, 64};
-  bool left_line_crossed = PORTAbits.RA2, right_line_crossed = PORTAbits.RA3;
-
-  if (left_line_crossed)
-    motorOrder[MOTOR_LEFT] -= 32, motorOrder[MOTOR_RIGHT] += 32;
-  else if (right_line_crossed)
-    motorOrder[MOTOR_LEFT] += 32, motorOrder[MOTOR_RIGHT] -= 32;
-  else
-    motorOrder[MOTOR_LEFT] += 64, motorOrder[MOTOR_RIGHT] += 64;
-
-  int8_t motor[2] = {MAP(motorOrder[MOTOR_LEFT]), MAP(motorOrder[MOTOR_RIGHT])};
-
-  size_t j = 0;
-  while (HIGH)
-  {
-    if (16.0 < motor[MOTOR_RIGHT])
-    {
-      PORTCbits.RC4 = LOW;
-      PORTCbits.RC6 = HIGH;
-      PORTCbits.RC5 = HIGH;
-      if (j > UINT8_MAX / 2.0 * abs(motor[MOTOR_RIGHT]))
-        PORTCbits.RC5 = LOW;
-    }
-    else if (-16.0 > motor[MOTOR_RIGHT])
-    {
-      PORTCbits.RC4 = HIGH;
-      PORTCbits.RC6 = LOW;
-      PORTCbits.RC5 = HIGH;
-      if (j > UINT8_MAX / 2.0 * abs(motor[MOTOR_RIGHT]))
-        PORTCbits.RC5 = LOW;
-    }
-    if (16.0 < motor[MOTOR_LEFT])
-    {
-      PORTCbits.RC3 = HIGH;
-      PORTCbits.RC1 = LOW;
-      PORTCbits.RC2 = HIGH;
-      if (j > UINT8_MAX / 2.0 * abs(motor[MOTOR_LEFT]))
-        PORTCbits.RC2 = LOW;
-    }
-    else if (-16.0 > motor[MOTOR_LEFT])
-    {
-      PORTCbits.RC3 = LOW;
-      PORTCbits.RC1 = HIGH;
-      PORTCbits.RC2 = HIGH;
-      if (j > UINT8_MAX / 2.0 * abs(motor[MOTOR_LEFT]))
-        PORTCbits.RC2 = LOW;
-    }
-    j++;
-    __delay_us(1);
-  }
+			PORTCbits.RC5 = HIGH;
+			if (0 < value)
+				SEL21 = HIGH, SEL22 = LOW;
+			else
+				SEL22 = HIGH, SEL21 = LOW;
+			break;
+		case 1:
+			PORTCbits.RC2 = HIGH;
+			if (0 < value)
+				SEL11 = LOW, SEL12 = HIGH;
+			else
+				SEL11 = HIGH, SEL12 = LOW;
+			break;
+		}
+	}
 }
