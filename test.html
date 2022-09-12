@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>test.md</title>
+    <meta http-equiv="Content-type" content="text/html;charset=UTF-8" />
+    
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+<link rel="stylesheet" href="file:///mnt/d/Users/adobe/OneDrive/Documents/pic/style.css" type="text/css"> <script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+    <script>
+      mermaid.initialize({
+        startOnLoad: true,
+        theme:
+          document.body.classList.contains("vscode-dark") ||
+          document.body.classList.contains("vscode-high-contrast")
+            ? "dark"
+            : "default",
+      });
+    </script>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.css"
+      integrity="sha384-9eLZqc9ds8eNjO3TmqPeYcDj8n+Qfa4nuSiGYa6DjLNcv9BtN69ZIulL9+8CqC9Y"
+      crossorigin="anonymous"
+    />
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.js"
+      integrity="sha384-K3vbOmF2BtaVai+Qk37uypf7VrgBubhQreNQe9aGsz9lB63dIFiQVlJbr92dw2Lx"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/contrib/auto-render.min.js"
+      integrity="sha384-kmZOZB5ObwgQnS/DuDg6TScgOiWWBiVt0plIRkZCmE6rDZGrEOQeHM5PcHi+nyqe"
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        renderMathInElement(document.body, {
+          delimiters: [
+            { left: "$$", right: "$$", display: true },
+            { left: "$", right: "$", display: false },
+          ],
+        });
+      });
+    </script>
+  </head>
+  <body>
+    <h1 id="1%E5%AE%9F%E9%A8%93%E5%86%85%E5%AE%B9">1.実験内容</h1>
+<p>PIC16F1778を用いてライントレーサーを製作する。</p>
+<h1 id="2%E5%9B%9E%E8%B7%AF%E6%A7%8B%E6%88%90">2.回路構成</h1>
+<p>今回の実験で用いた回路を図1に表す。</p>
+<p><img src="./PICmain/fig1.png" alt="fig1"></p>
+<p>今回はPIC16F1778からFETアレイ(MP4212)に出力するときのバッファーとして74HC00を用いた。</p>
+<div style="page-break-before:always"></div>
+<h1 id="3%E3%83%97%E3%83%AD%E3%82%B0%E3%83%A9%E3%83%A0">3.プログラム</h1>
+<p>今回の実験でオーバルコースを走行するために作成したフローチャートを図2に表す。</p>
+<p><img src="./PICmain/fig2.svg" alt="fig2"></p>
+<p>今回の実験で用いたプログラムを以下に表す。</p>
+<pre class="hljs"><code><div><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdbool.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdio.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">"mcc_generated_files/mcc.h"</span></span>
+
+<span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> INCREMENTAL 16</span>
+
+<span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> LEFT_LINE_CROSSED PORTAbits.RA2</span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> RIGHT_LINE_CROSSED PORTAbits.RA3</span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> SEL11 PORTCbits.RC1</span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> SEL12 PORTCbits.RC3</span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> SEL21 PORTCbits.RC4</span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> SEL22 PORTCbits.RC6</span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> CCP1 PORTCbits.RC2</span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> CCP2 PORTCbits.RC5</span>
+
+<span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> SUB(x) ((0 == x) ? (0) : (x - 1))</span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> ABS(x) ((0 &lt; x) ? (x) : (-x))</span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> ROUNDtoINT8(x) ((INT8_MAX &lt; x) ? (INT8_MAX) : ((x &lt; INT8_MIN) ? (INT8_MIN) : (x)))</span>
+
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">SetMotorOrder</span><span class="hljs-params">(<span class="hljs-keyword">int16_t</span> motorOrder[<span class="hljs-number">2</span>])</span></span>;
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">RunMotor</span><span class="hljs-params">(<span class="hljs-keyword">const</span> <span class="hljs-keyword">uint8_t</span> motorNum, <span class="hljs-keyword">const</span> <span class="hljs-keyword">int8_t</span> value)</span></span>;
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(<span class="hljs-keyword">void</span>)</span>
+</span>{
+    SYSTEM_Initialize();
+    <span class="hljs-keyword">int16_t</span> motorOrder[<span class="hljs-number">2</span>] = {<span class="hljs-number">64</span>, <span class="hljs-number">64</span>};
+    <span class="hljs-keyword">int8_t</span> motor[<span class="hljs-number">2</span>] = {<span class="hljs-number">0</span>};
+    <span class="hljs-keyword">while</span> (<span class="hljs-literal">true</span>)
+    {
+        SetMotorOrder(motorOrder);
+        motor[<span class="hljs-number">0</span>] = ROUNDtoINT8(motorOrder[<span class="hljs-number">0</span>]);
+        motor[<span class="hljs-number">1</span>] = ROUNDtoINT8(motorOrder[<span class="hljs-number">1</span>]);
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">size_t</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">2</span>; i++)
+            RunMotor(i, motor[i]);
+        __delay_ms(<span class="hljs-number">1</span>);
+    }
+}
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">SetMotorOrder</span><span class="hljs-params">(<span class="hljs-keyword">int16_t</span> motorOrder[<span class="hljs-number">2</span>])</span>
+</span>{
+    <span class="hljs-comment">/**
+     * @brief get position from line sensor and set motorOrder
+     * @param motorOrder[2]
+     * @return void
+     * @note    motorOrder[0] is left motor, motorOrder[1] is right motor
+     * @note    motorOrder[0] is positive if forward, negative if backward
+     * @note    motorOrder[1] is positive if forward, negative if backward
+     */</span>
+    <span class="hljs-keyword">if</span> (LEFT_LINE_CROSSED)
+        motorOrder[<span class="hljs-number">0</span>] -= INCREMENTAL, motorOrder[<span class="hljs-number">1</span>] += INCREMENTAL;
+    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (RIGHT_LINE_CROSSED)
+        motorOrder[<span class="hljs-number">0</span>] += INCREMENTAL, motorOrder[<span class="hljs-number">1</span>] -= INCREMENTAL;
+    <span class="hljs-keyword">else</span>
+        motorOrder[<span class="hljs-number">0</span>] += INCREMENTAL, motorOrder[<span class="hljs-number">1</span>] += INCREMENTAL;
+}
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">RunMotor</span><span class="hljs-params">(<span class="hljs-keyword">const</span> <span class="hljs-keyword">uint8_t</span> motorNum, <span class="hljs-keyword">const</span> <span class="hljs-keyword">int8_t</span> value)</span>
+</span>{
+    <span class="hljs-comment">/**
+     * @brief run motor with designated time
+     * @param motorNum
+     * @param value
+     * @return void
+     * @note    motorNum is 0 or 1
+     * @note    value is positive if forward, negative if backward
+     * @note    motorOrder[0] is left motor, motorOrder[1] is right motor
+     * @note    motorOrder[0] is positive if forward, negative if backward
+     * @note    motorOrder[1] is positive if forward, negative if backward
+     */</span>
+    <span class="hljs-keyword">static</span> <span class="hljs-keyword">size_t</span> timer = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">if</span> (timer)
+    {
+        timer--;
+        <span class="hljs-keyword">if</span> (!timer)
+            CCP1 = <span class="hljs-literal">LOW</span>, CCP2 = <span class="hljs-literal">LOW</span>;
+    }
+    <span class="hljs-keyword">else</span>
+    {
+        timer = ABS(value);
+        <span class="hljs-keyword">switch</span> (motorNum)
+        {
+        <span class="hljs-keyword">case</span> <span class="hljs-number">0</span>:
+
+            PORTCbits.RC5 = <span class="hljs-literal">HIGH</span>;
+            <span class="hljs-keyword">if</span> (<span class="hljs-number">0</span> &lt; value)
+                SEL21 = <span class="hljs-literal">HIGH</span>, SEL22 = <span class="hljs-literal">LOW</span>;
+            <span class="hljs-keyword">else</span>
+                SEL22 = <span class="hljs-literal">HIGH</span>, SEL21 = <span class="hljs-literal">LOW</span>;
+            <span class="hljs-keyword">break</span>;
+        <span class="hljs-keyword">case</span> <span class="hljs-number">1</span>:
+            PORTCbits.RC2 = <span class="hljs-literal">HIGH</span>;
+            <span class="hljs-keyword">if</span> (<span class="hljs-number">0</span> &lt; value)
+                SEL11 = <span class="hljs-literal">LOW</span>, SEL12 = <span class="hljs-literal">HIGH</span>;
+            <span class="hljs-keyword">else</span>
+                SEL11 = <span class="hljs-literal">HIGH</span>, SEL12 = <span class="hljs-literal">LOW</span>;
+            <span class="hljs-keyword">break</span>;
+        }
+    }
+}
+</div></code></pre>
+<div style="page-break-before:always"></div>
+<h1 id="4%E8%87%AA%E5%88%86%E3%81%AE%E6%8B%85%E5%BD%93%E9%83%A8%E4%BD%8D%E3%81%A8%E5%B7%A5%E5%A4%AB%E3%81%97%E3%81%9F%E3%81%93%E3%81%A8">4.自分の担当部位と工夫したこと</h1>
+<p>私の担当部位は、ブレットボード上での回路の作成、プログラムの作成、実機での調整の3つである。</p>
+<h1 id="5%E3%83%96%E3%83%AC%E3%83%83%E3%83%89%E3%83%9C%E3%83%BC%E3%83%89%E4%B8%8A%E3%81%A7%E7%B5%84%E3%82%93%E3%81%A0%E5%9B%9E%E8%B7%AF%E3%81%A7%E5%8B%95%E3%81%84%E3%81%9F%E3%81%8B%E5%8B%95%E3%81%8B%E3%81%AA%E3%81%8B%E3%81%A3%E3%81%9F%E3%81%8B">5.ブレッドボード上で組んだ回路で動いたか，動かなかったか</h1>
+<p>モーターの動作や、スイッチの読み取り、センサーの読み取りを実現できた。</p>
+<h1 id="6%E8%B5%B0%E3%82%89%E3%81%AA%E3%81%8B%E3%81%A3%E3%81%9F%E5%8E%9F%E5%9B%A0">6.走らなかった原因</h1>
+<p>左右のモーターを動かすことはできたが、地面の状況を読むセンサーの調整がうまくいかず、オーバルコースを走行中にコースアウトして時間内に完走することは出来なかった。</p>
+
+  </body>
+</html>

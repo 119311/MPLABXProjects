@@ -58,7 +58,8 @@ body a:hover {
 
 body abbr[title] {
 	border-bottom: none;
-	text-decoration: underline dotted;
+	-webkit-text-decoration: underline dotted;
+            text-decoration: underline dotted;
 }
 
 body b,
@@ -212,6 +213,8 @@ body table {
 	border-spacing: 0;
 	border-collapse: collapse;
 	display: block;
+    width: -webkit-max-content;
+        width: -moz-max-content;
 	width: max-content;
 	max-width: 100%;
 	overflow: auto;
@@ -340,6 +343,25 @@ body .octicon {
 	fill: currentColor;
 }
 
+body ::-webkit-input-placeholder {
+    color: #6e7781;
+    opacity: 1;
+}
+
+body ::-moz-placeholder {
+    color: #6e7781;
+    opacity: 1;
+}
+
+body :-ms-input-placeholder {
+    color: #6e7781;
+    opacity: 1;
+}
+
+body ::-ms-input-placeholder {
+    color: #6e7781;
+    opacity: 1;
+}
 body ::placeholder {
 	color: #6e7781;
 	opacity: 1;
@@ -936,5 +958,6 @@ body .contains-task-list:dir(rtl) .task-list-item-checkbox {
 }
 
 body ::-webkit-calendar-picker-indicator {
-	filter: invert(50%);
+    -webkit-filter: invert(50%);
+            filter: invert(50%);
 }
