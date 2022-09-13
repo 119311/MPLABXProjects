@@ -4,6 +4,7 @@
 **/*.X/build
 **/*.X/debug
 **/*.X/dist
+**/*.X/mcc_generated_files/*.i
 
 .vscode/*
 
