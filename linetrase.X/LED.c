@@ -1,5 +1,6 @@
 #include "LED.h"
-void get_LED(LED* self)
+static uint16_t tempValue;
+void getLed(LED* self)
 {
     self->LED1 = LED1_PORT;
     self->LED2 = LED2_PORT;
@@ -7,8 +8,6 @@ void get_LED(LED* self)
     self->LED5 = LED5_PORT;
     self->LED7 = LED7_PORT;
     self->LED8 = LED8_PORT;
-    ADC_GetConversion(LED3);
-    uint16_t LED3;
-    uint16_t LED6;
-    return;
+    self->LED3A = ADC_GetConversion(LED3A);
+    self->LED6A = ADC_GetConversion(LED6A);
 }

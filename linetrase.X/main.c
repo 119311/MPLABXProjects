@@ -1,21 +1,25 @@
+#include "LED.h"
 #include "mcc_generated_files/mcc.h"
 #include "motor.h"
-void get_led()
-{
-    return;
+Motor left, right;
+LED led;
+
+void run(void) {
+    runMotor(&left);
+    runMotor(&right);
+
 }
-TMR0_INT(void)
-{
-    get_led();
-}
-void main(void)
-{
+
+void main(void) {
     SYSTEM_Initialize();
     INTERRUPT_GlobalInterruptEnable();
     INTERRUPT_PeripheralInterruptEnable();
-    TMR0_SetInterruptHandler(TMR0_INT);
-    Motor left;
+    setPort(&left, IN2_PORT, IN1_PORT);
+    setPort(&right, IN3_PORT, IN4_PORT);
+    setSpeed(&left, 20);
+    setSpeed(&right, 20);
+    setDirection(&left, forward);
+    setDirection(&right, forward);
     while (true) {
-        left.speed = 20;
     }
 }
