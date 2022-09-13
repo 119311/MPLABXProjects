@@ -18,4 +18,4 @@ int getDirection(const Motor* self);
 void setSpeed(Motor* self, uint8_t value);
 void setDirection(Motor* self, bool value);
 void setPort(Motor* self, PORTBbits_t* port1, PORTBbits_t* port2);
-void runMotor( Motor* self);
+void runMotor(Motor* self);
