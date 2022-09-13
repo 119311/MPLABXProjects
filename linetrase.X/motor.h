@@ -10,6 +10,8 @@ typedef struct motor_t Motor;
 struct motor_t {
     bool direction;
     uint8_t speed;
+    uint8_t tempSpeed;
+    uint8_t tempTime = BASETIME;
     PORTBbits_t* port1;
     PORTBbits_t* port2;
 };

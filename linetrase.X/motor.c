@@ -28,8 +28,20 @@ void setPort(Motor* self, PORTBbits_t* port1, PORTBbits_t* port2)
 
 void runMotor(Motor* self)
 {
-    uint8_t tempSpeed = ((self->speed) > BASETIME) ? BASETIME : (self->speed);
-    uint8_t tempTime = BASETIME;
-    bool temp = false;
-    tempTime--;
+    if (!self->tempTime) {
+        if (!self->speed) {
+            if (self->direction) {
+                self->port1 = HIGH;
+                self->port2 = LOW;
+            } else {
+                self->port1 = LOW;
+                self->port2 = HIGH;
+            }
+            self->speed--;
+        }
+        self->tempTime--;
+    } else {
+        self->tempSpeed = ((self->speed) > BASETIME) ? BASETIME : (self->speed);
+        self->tempTime = BASETIME;
+    }
 }
