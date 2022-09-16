@@ -13,4 +13,4 @@ struct led_t {
     bool LED7;
     bool LED8;
 };
-void getLed(LED* self);
+void readLed(LED* self);

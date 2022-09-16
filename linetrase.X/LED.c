@@ -1,6 +1,6 @@
 #include "LED.h"
 static uint16_t tempValue;
-void getLed(LED* self)
+void readLed(LED* self)
 {
     self->LED1 = LED1_PORT;
     self->LED2 = LED2_PORT;

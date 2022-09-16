@@ -4,13 +4,14 @@
 Motor left, right;
 LED led;
 
-void run(void) {
+void run(void)
+{
     runMotor(&left);
     runMotor(&right);
-
 }
 
-void main(void) {
+void main(void)
+{
     SYSTEM_Initialize();
     INTERRUPT_GlobalInterruptEnable();
     INTERRUPT_PeripheralInterruptEnable();
