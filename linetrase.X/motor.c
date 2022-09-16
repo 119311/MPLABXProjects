@@ -20,10 +20,10 @@ void setDirection(Motor* self, bool value)
     self->direction = value;
 }
 
-void setPort(Motor* self, PORTBbits_t* port1, PORTBbits_t* port2)
+void setPort(Motor* self, bool port1, bool port2)
 {
-    self->port1 = port1;
-    self->port2 = port2;
+    self->port1 = &port1;
+    self->port2 = &port2;
 }
 
 void runMotor(Motor* self)
@@ -31,11 +31,11 @@ void runMotor(Motor* self)
     if (!self->tempTime) {
         if (!self->speed) {
             if (self->direction) {
-                self->port1 = HIGH;
-                self->port2 = LOW;
+                *(self->port1) = HIGH;
+                *(self->port2) = LOW;
             } else {
-                self->port1 = LOW;
-                self->port2 = HIGH;
+                *(self->port1) = LOW;
+                *(self->port2) = HIGH;
             }
             self->speed--;
         }
