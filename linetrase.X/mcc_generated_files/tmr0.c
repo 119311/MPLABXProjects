@@ -50,8 +50,8 @@ extern void run(void);
   Section: Included Files
  */
 
-#include "tmr0.h"
 #include <xc.h>
+#include "tmr0.h"
 
 /**
   Section: Global Variables Definitions
@@ -59,7 +59,6 @@ extern void run(void);
 
 volatile uint8_t timer0ReloadVal;
 void (*TMR0_InterruptHandler)(void);
-
 /**
   Section: TMR0 APIs
  */
@@ -71,11 +70,11 @@ void TMR0_Initialize(void)
     // PSA not_assigned; PS 1:256; TMRSE Increment_hi_lo; mask the nWPUEN and INTEDG bits
     OPTION_REG = (uint8_t)((OPTION_REG & 0xC0) | (0x5F & 0x3F));
 
-    // TMR0 156;
-    TMR0 = 0x9C;
+    // TMR0 56; 
+    TMR0 = 0x38;
 
     // Load the TMR value to reload variable
-    timer0ReloadVal = 156;
+    timer0ReloadVal= 56;
 
     // Clear Interrupt flag before enabling the interrupt
     INTCONbits.TMR0IF = 0;
@@ -126,7 +125,6 @@ void TMR0_ISR(void)
 void TMR0_CallBack(void)
 {
     // Add your custom callback code here
-    //    run();
 
     if (TMR0_InterruptHandler) {
         TMR0_InterruptHandler();
