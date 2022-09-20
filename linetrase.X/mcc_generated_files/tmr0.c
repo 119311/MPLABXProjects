@@ -50,8 +50,8 @@ extern void run(void);
   Section: Included Files
  */
 
-#include <xc.h>
 #include "tmr0.h"
+#include <xc.h>
 
 /**
   Section: Global Variables Definitions
@@ -67,14 +67,14 @@ void TMR0_Initialize(void)
 {
     // Set TMR0 to the options selected in the User Interface
 
-    // PSA not_assigned; PS 1:256; TMRSE Increment_hi_lo; mask the nWPUEN and INTEDG bits
-    OPTION_REG = (uint8_t)((OPTION_REG & 0xC0) | (0x5F & 0x3F));
+    // PSA assigned; PS 1:32; TMRSE Increment_hi_lo; mask the nWPUEN and INTEDG bits
+    OPTION_REG = (uint8_t)((OPTION_REG & 0xC0) | (0x54 & 0x3F));
 
-    // TMR0 56; 
-    TMR0 = 0x38;
+    // TMR0 255;
+    TMR0 = 0xFF;
 
     // Load the TMR value to reload variable
-    timer0ReloadVal= 56;
+    timer0ReloadVal = 255;
 
     // Clear Interrupt flag before enabling the interrupt
     INTCONbits.TMR0IF = 0;
@@ -125,6 +125,7 @@ void TMR0_ISR(void)
 void TMR0_CallBack(void)
 {
     // Add your custom callback code here
+    run();
 
     if (TMR0_InterruptHandler) {
         TMR0_InterruptHandler();

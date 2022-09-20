@@ -1,4 +1,5 @@
 #include "motor.h"
+#include <string.h>
 int getSpeed(const Motor* self)
 {
     return self->_speed;
@@ -15,22 +16,26 @@ void setDirection(Motor* self, bool value)
 {
     self->_direction = value;
 }
-void setPort(Motor* self, bool port1, bool port2)
+void setPort(Motor* self, volatile uint8_t* port, uint8_t addr1, uint8_t addr2)
 {
-    self->_port1 = &port1, self->_port2 = &port2;
+    self->_port = port, self->_addr1 = addr1, self->_addr2 = addr2;
 }
 void runMotor(Motor* self)
 {
+    uint8_t tempVal = *self->_port;
+    static bool start = false;
+    uint8_t temp = 0;
     if (self->_tempTime-- > 0) {
         if (self->_tempSpeed-- > 0) {
-            *(self->_port1) = self->_direction;
-            *(self->_port2) = !self->_direction;
-        } else {
-            *(self->_port1) = LOW;
-            *(self->_port2) = LOW;
+            temp += self->_direction ? self->_addr1 : 0;
+            temp += self->_direction ? 0 : self->_addr2;
         }
     } else {
-        self->_tempSpeed = ((self->_speed) > BASETIME) ? BASETIME : self->_speed;
+        //        self->_tempSpeed = ((self->_speed) > BASETIME) ? BASETIME : self->_speed;
+
+        self->_tempSpeed = 4;
         self->_tempTime = BASETIME;
     }
+    *self->_port = (tempVal & ~(self->_addr1 | self->_addr2)) | (temp & (self->_addr1 | self->_addr2));
+    asm("NOP");
 }
