@@ -32,10 +32,8 @@ void runMotor(Motor* self)
         }
     } else {
         //        self->_tempSpeed = ((self->_speed) > BASETIME) ? BASETIME : self->_speed;
-
         self->_tempSpeed = 4;
         self->_tempTime = BASETIME;
     }
     *self->_port = (tempVal & ~(self->_addr1 | self->_addr2)) | (temp & (self->_addr1 | self->_addr2));
-    asm("NOP");
 }
