@@ -1,3 +1,5 @@
+#ifndef MOTOR_H
+#define MOTOR_H
 #pragma once
 #include "../mcc_generated_files/mcc.h"
 #include <stdbool.h>
@@ -20,3 +22,4 @@ void setSpeed(Motor* self, uint8_t value);
 void setDirection(Motor* self, bool value);
 void setPort(Motor* self, volatile uint8_t* port, uint8_t addr1, uint8_t addr2);
 void runMotor(Motor* self);
+#endif
