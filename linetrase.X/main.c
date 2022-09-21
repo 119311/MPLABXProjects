@@ -21,8 +21,8 @@ void motorInit(void)
 {
     setPort(&left, &LATB, IN2, IN1);
     setPort(&right, &LATB, IN4, IN3);
-    setDirection(&left, true);
-    setDirection(&right, true);
+    setDirection(&left, false);
+    setDirection(&right, false);
     MODE_LAT = LOW;
     LARGE_LAT = LOW;
 }

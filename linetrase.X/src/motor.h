@@ -10,6 +10,7 @@ struct motor_t {
     int8_t _tempTime;
     uint8_t _addr1;
     uint8_t _addr2;
+    int16_t _tempCount;
     bool _direction;
     volatile uint8_t* _port;
 };
