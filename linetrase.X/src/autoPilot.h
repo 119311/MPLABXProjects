@@ -1,4 +1,3 @@
-#include "autoPilot.h"
 #include "lineTracer.h"
 #include <stdbool.h>
 #include <stdint.h>
