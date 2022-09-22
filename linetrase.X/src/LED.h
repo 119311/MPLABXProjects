@@ -6,11 +6,11 @@ typedef struct led_t LED;
 struct led_t {
     bool _LED1;
     bool _LED2;
-    uint8_t _LED3A;
     bool _LED4;
     bool _LED5;
-    uint8_t _LED6A;
     bool _LED7;
     bool _LED8;
+    uint8_t _LED6A;
+    uint8_t _LED3A;
 };
 void readLed(LED* self);
