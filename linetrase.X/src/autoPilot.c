@@ -31,6 +31,18 @@ State getState(LED* led)
 }
 void lineTrace(LED* led, uint8_t* leftSpeed, uint8_t* rightSpeed)
 {
+    // pid
+    static float integral = 0.0;
+    static float derivative = 0.0;
+    static float lastError = 0.0;
+    float error = (float)(led->_LED3A - led->_LED6A);
+    integral += error * dt;
+    derivative = (error - lastError) / dt;
+    float pid = Kp * error + Ki * integral + Kd * derivative;
+    lastError = error;
+    *leftSpeed = (uint8_t)(*leftSpeed + pid);
+    *rightSpeed = (uint8_t)(*rightSpeed - pid);
+    return;
 }
 void crank(LED* led, uint8_t* leftSpeed, uint8_t* rightSpeed)
 {
