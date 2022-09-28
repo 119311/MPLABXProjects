@@ -1,4 +1,5 @@
-#pragma once
+#ifndef LED_H
+#define LED_H
 #include "../mcc_generated_files/mcc.h"
 #include <stdbool.h>
 #include <stdint.h>
@@ -14,3 +15,4 @@ struct led_t {
     uint8_t _LED3A;
 };
 void readLed(LED* self);
+#endif
