@@ -19,7 +19,7 @@ void main(void)
     setSpeed(&right, rightSpeed);
     while (true) {
         readLed(&led);
-        autoPilot(&led, &leftSpeed, &rightSpeed);
+//        autoPilot(&led, &leftSpeed, &rightSpeed);
         setSpeed(&left, leftSpeed);
         setSpeed(&right, rightSpeed);
     }

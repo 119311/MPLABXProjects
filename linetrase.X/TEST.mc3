@@ -971,7 +971,7 @@
          <value>enabled</value>
       </entry>
       <entry>
-         <key class="com.microchip.mcc.core.tokenManager.CustomKey" moduleName="Pin Module" name="ADCACTPPS%aux0"/>
+         <key class="com.microchip.mcc.core.tokenManager.CustomKey" moduleName="Pin Module" name="ADCACTPPS%aux1"/>
          <value>%DESELECT%</value>
       </entry>
       <entry>
@@ -1179,7 +1179,7 @@
          <value>disabled</value>
       </entry>
       <entry>
-         <key class="com.microchip.mcc.core.tokenManager.CustomKey" moduleName="Pin Module" name="T0CKIPPS%aux1"/>
+         <key class="com.microchip.mcc.core.tokenManager.CustomKey" moduleName="Pin Module" name="T0CKIPPS%aux0"/>
          <value>%DESELECT%</value>
       </entry>
       <entry>
@@ -5726,7 +5726,7 @@
    <generatedFileHashHistoryMap class="java.util.HashMap">
       <entry>
          <file>mcc_generated_files\mcc.h</file>
-         <hash>40bd30c9d344613b82c5106e3b8159c4a927b0d986fdb4b1a0cc2fdddaa25485</hash>
+         <hash>037aa66a55087ffec1a4a753bd5cb8803a48bc7fcfa9e3e87bc7c977548682e3</hash>
       </entry>
       <entry>
          <file>mcc_generated_files\device_config.h</file>
@@ -5770,7 +5770,7 @@
       </entry>
       <entry>
          <file>mcc_generated_files\mcc.c</file>
-         <hash>f5b6008ae826ab8b91f35186663f252610f2e10ac2c3de356958b9e0503f6d80</hash>
+         <hash>ec7bc7410a067741fc0901def5adf6ecd7184b42f211fca13bed7bc519c20d19</hash>
       </entry>
       <entry>
          <file>mcc_generated_files\interrupt_manager.c</file>
