@@ -55,13 +55,7 @@ void __interrupt() INTERRUPT_InterruptManager (void)
     if(INTCONbits.TMR0IE == 1 && INTCONbits.TMR0IF == 1)
     {
         TMR0_ISR();
-    }
-    else if(INTCONbits.IOCIE == 1 && INTCONbits.IOCIF == 1)
-    {
-        PIN_MANAGER_IOC();
-    }
-    else if(INTCONbits.PEIE == 1)
-    {
+    } else if (INTCONbits.PEIE == 1) {
         if(PIE1bits.ADIE == 1 && PIR1bits.ADIF == 1)
         {
             ADC_ISR();
@@ -70,9 +64,7 @@ void __interrupt() INTERRUPT_InterruptManager (void)
         {
             //Unhandled Interrupt
         }
-    }      
-    else
-    {
+    } else {
         //Unhandled Interrupt
     }
 }

@@ -12,6 +12,10 @@ void setSpeed(Motor* self, uint8_t value)
 {
     self->_speed = value;
 }
+void setTargetSpeed(Motor* self, uint8_t value)
+{
+    self->_targetSpeed = value;
+}
 void setDirection(Motor* self, bool value)
 {
     self->_direction = value;
@@ -32,7 +36,6 @@ void runMotor(Motor* self)
     } else {
         if (!((self->_tempCount++) % 1500))
             self->_speed += 1;
-        // self->_tempSpeed = 4;
         self->_tempSpeed = ((self->_speed) > BASETIME) ? BASETIME : self->_speed;
         self->_tempTime = BASETIME;
     }

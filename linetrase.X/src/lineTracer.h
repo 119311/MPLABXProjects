@@ -16,9 +16,6 @@ Motor left, right;
 
 LED led;
 
-void run(void)
-{
-    runMotor(&left);
-    runMotor(&right);
-}
+uint8_t leftSpeed = 1, rightSpeed = 1;
+
 #endif
