@@ -1,0 +1,8 @@
+{
+  "files.associations": {
+    "*.ASM": "i8080-macroasm",
+    "autopilot.h": "c",
+    "linetracer.h": "c",
+    "stdint.h": "c"
+  }
+}

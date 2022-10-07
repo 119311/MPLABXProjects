@@ -8,6 +8,6 @@ void readLed(LED* self)
     self->_LED5 = LED5_PORT;
     self->_LED7 = LED7_PORT;
     self->_LED8 = LED8_PORT;
-    self->_LED3A = ADC_GetConversion(LED3A);
-    self->_LED6A = ADC_GetConversion(LED6A);
+    // self->_LED3A = ADC_GetConversion(LED3A);
+    // self->_LED6A = ADC_GetConversion(LED6A);
 }

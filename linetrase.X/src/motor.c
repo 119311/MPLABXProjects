@@ -34,8 +34,11 @@ void runMotor(Motor* self)
             temp += self->_direction ? 0 : self->_addr2;
         }
     } else {
-        if (!((self->_tempCount++) % 1500))
-            self->_speed += 1;
+        if (!((self->_tempCount++) % 1700))
+            if (self->_targetSpeed > self->_speed)
+                self->_speed += 1;
+            else if (self->_targetSpeed < self->_speed)
+                self->_speed -= 1;
         self->_tempSpeed = ((self->_speed) > BASETIME) ? BASETIME : self->_speed;
         self->_tempTime = BASETIME;
     }

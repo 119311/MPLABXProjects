@@ -10,12 +10,7 @@ void motorInit(void)
 }
 void run(void)
 {
-    readLed(&led);
     autoPilot(&led, &leftSpeed, &rightSpeed);
-    setSpeed(&left, leftSpeed);
-    setSpeed(&right, rightSpeed);
-    // setTargetSpeed(&left, leftSpeed);
-    // setTargetSpeed(&right, rightSpeed);
     runMotor(&left);
     runMotor(&right);
     asm("NOP");
@@ -24,14 +19,15 @@ void main(void)
 {
     SYSTEM_Initialize();
     motorInit();
+    setTargetSpeed(&left, leftSpeed);
+    setTargetSpeed(&right, rightSpeed);
     INTERRUPT_GlobalInterruptEnable();
     INTERRUPT_PeripheralInterruptEnable();
-    uint8_t leftSpeed = 4, rightSpeed = 4;
-    setSpeed(&left, leftSpeed);
-    setSpeed(&right, rightSpeed);
     while (true) {
-        // readLed(&led);
-        // autoPilot(&led, &leftSpeed, &rightSpeed);
+        readLed(&led);
+        setTargetSpeed(&left, leftSpeed);
+        setTargetSpeed(&right, rightSpeed);
+        //        autoPilot(&led, &leftSpeed, &rightSpeed);
         // setSpeed(&left, leftSpeed);
         // setSpeed(&right, rightSpeed);
     }

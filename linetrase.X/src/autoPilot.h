@@ -2,7 +2,7 @@
 #include <stdbool.h>
 #include <stdint.h>
 
-#define Kp 0.01
+#define Kp 0.1
 
 // typedef enum {
 //     LINETRACE,
