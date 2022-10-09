@@ -17,8 +17,7 @@ void run(void)
 }
 void main(void)
 {
-    SYSTEM_Initialize();
-    motorInit();
+    SYSTEM_Initialize(), motorInit();
     setTargetSpeed(&left, leftSpeed);
     setTargetSpeed(&right, rightSpeed);
     TMR0_SetInterruptHandler(run);
