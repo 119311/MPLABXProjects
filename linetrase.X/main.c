@@ -8,19 +8,29 @@ void motorInit(void)
     MODE_LAT = LOW;
     LARGE_LAT = LOW;
 }
+uint8_t leftSpeed = 1, rightSpeed = 1;
+void run(void)
+{
+    INTCONbits.TMR0IE = 0;
+    readLed(&led);
+    // autoPilot(&led, &leftSpeed, &rightSpeed);
+    // setSpeed(&left, leftSpeed);
+    // setSpeed(&right, rightSpeed);
+    runMotor(&left);
+    runMotor(&right);
+    INTCONbits.TMR0IE = 1;
+}
+
 void main(void)
 {
     SYSTEM_Initialize();
     motorInit();
-    INTERRUPT_GlobalInterruptEnable();
-    INTERRUPT_PeripheralInterruptEnable();
-    uint8_t leftSpeed = 4, rightSpeed = 4;
+
+    TMR0_SetInterruptHandler(run);
     setSpeed(&left, leftSpeed);
     setSpeed(&right, rightSpeed);
+    INTERRUPT_GlobalInterruptEnable();
+    INTERRUPT_PeripheralInterruptEnable();
     while (true) {
-        readLed(&led);
-//        autoPilot(&led, &leftSpeed, &rightSpeed);
-        setSpeed(&left, leftSpeed);
-        setSpeed(&right, rightSpeed);
     }
 }

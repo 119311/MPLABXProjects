@@ -8,28 +8,53 @@
 #define Kp 0.3
 #define Ki 0.0
 #define Kd 0.0
-void lineTrace(uint8_t* leftSpeed, uint8_t* rightSpeed, const uint8_t* leftLed, const uint8_t* rightLed);
+
+#define BASETIME 32
+
+typedef struct {
+    uint8_t _speed;
+    int8_t _tempSpeed;
+    uint8_t _targetSpeed;
+    int8_t _tempTime;
+    uint8_t _addr1;
+    uint8_t _addr2;
+    int16_t _tempCount;
+    bool _direction;
+    volatile uint8_t* _port;
+} Motor;
+void setTargetSpeed(Motor* self, uint8_t value)
+{
+    self->_targetSpeed = value;
+}
+uint8_t getSpeed(const Motor* self)
+{
+    return self->_speed;
+}
+uint8_t getTargetSpeed(const Motor* self)
+{
+    return self->_targetSpeed;
+}
+bool getDirection(const Motor* self)
+{
+    return self->_direction;
+}
+void setSpeed(Motor* self, uint8_t value)
+{
+    uint8_t nowValue = getSpeed(self);
+    int8_t difference = value - nowValue;
+    if (difference >> 8)
+        nowValue -= (((1 + difference) >> 8) ? 4 : -difference);
+    else if (difference)
+        nowValue += (nowValue - 4) >> 8 ? 1 : ((difference - 1) >> 8 ? difference : 4);
+    nowValue = nowValue ? nowValue : 1;
+    self->_speed = nowValue;
+}
+}
 int main(void)
 {
-    uint8_t leftSpeed = 4, rightSpeed = 4;
-    uint8_t leftLed = 120, rightLed = 110;
-    while (true) {
-        lineTrace(&leftSpeed, &rightSpeed, &leftLed, &rightLed);
+    Motor motor = { 0, 0, 12, 0, 1, 2, 1, true, NULL };
+    for (int i = 0; i < 100; i++) {
+        runMotor(&motor);
     }
     return 0;
-}
-
-void lineTrace(uint8_t* leftSpeed, uint8_t* rightSpeed, const uint8_t* leftLed, const uint8_t* rightLed)
-{
-    // pid
-    static float integral = 0.0, derivative = 0.0, lastError = 0.0;
-    float error = (float)(*leftLed - *rightLed);
-    integral += error * dt;
-    derivative = (error - lastError) / dt;
-    float pid = Kp * error + Ki * integral + Kd * derivative;
-    lastError = error;
-    *leftSpeed = (uint8_t)(*leftSpeed + pid);
-    *rightSpeed = (uint8_t)(*rightSpeed - pid);
-    printf("leftSpeed:%d,rightSpeed:%d,leftLed:%d,rightLed:%d,error:%f,integral:%f,derivative:%f,pid:%f,lastError:%f\n", *leftSpeed, *rightSpeed, *leftLed, *rightLed, error, integral, derivative, pid, lastError);
-    return;
 }
