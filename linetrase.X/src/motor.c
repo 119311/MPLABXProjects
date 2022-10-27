@@ -37,15 +37,15 @@ void setPort(Motor* self, volatile uint8_t* port, uint8_t addr1, uint8_t addr2)
 }
 void runMotor(Motor* self)
 {
-    uint8_t tempVal = *self->_port, temp = 0;
+    uint8_t tempVal = *self->_port, temp = 0, addr1 = self->_addr1, address2 = self->_addr2;
     if (self->_tempTime-- > 0) {
         if (self->_tempSpeed-- > 0)
-            temp += getDirection(self) ? self->_addr1 : self->_addr2;
+            temp += getDirection(self) ? addr1 : addr2;
     } else {
         if (!((self->_tempCount++) % 400))
             setSpeed(self, getSpeed(self) + 1);
         self->_tempSpeed = getSpeed(self);
         self->_tempTime = BASETIME;
     }
-    *self->_port = (tempVal & ~(self->_addr1 | self->_addr2)) | (temp & (self->_addr1 | self->_addr2));
+    *self->_port = (tempVal & ~(addr1 | addr2)) | (temp & (addr1 | addr2));
 }

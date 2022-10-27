@@ -13,9 +13,9 @@ void run(void)
 {
     INTCONbits.TMR0IE = 0;
     readLed(&led);
-    // autoPilot(&led, &leftSpeed, &rightSpeed);
-    // setSpeed(&left, leftSpeed);
-    // setSpeed(&right, rightSpeed);
+    autoPilot(&led, &leftSpeed, &rightSpeed);
+    setSpeed(&left, leftSpeed);
+    setSpeed(&right, rightSpeed);
     runMotor(&left);
     runMotor(&right);
     INTCONbits.TMR0IE = 1;
@@ -25,12 +25,11 @@ void main(void)
 {
     SYSTEM_Initialize();
     motorInit();
-
     TMR0_SetInterruptHandler(run);
     setSpeed(&left, leftSpeed);
     setSpeed(&right, rightSpeed);
     INTERRUPT_GlobalInterruptEnable();
     INTERRUPT_PeripheralInterruptEnable();
-    while (true) {
-    }
+    while (true)
+        asm("nop");
 }
