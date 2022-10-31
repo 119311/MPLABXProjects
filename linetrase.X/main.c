@@ -1,10 +1,11 @@
 #include "src/lineTracer.h"
+
 void motorInit(void)
 {
-    setPort(&left, &LATB, IN2, IN1);
-    setPort(&right, &LATB, IN4, IN3);
+    setPort(&right, &LATB, IN2, IN1);
+    setPort(&left, &LATB, IN4, IN3);
     setDirection(&left, true);
-    setDirection(&right,true);
+    setDirection(&right, true);
     MODE_LAT = LOW;
     LARGE_LAT = LOW;
 }

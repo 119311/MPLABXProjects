@@ -16,5 +16,7 @@
 
 Motor left, right;
 LED led;
+uint8_t leftSpeed = 1, rightSpeed = 1;
+bool flag = false, oldFlag = false, motorSelect = false;
 
 #endif

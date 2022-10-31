@@ -1,8 +1,5 @@
-#include "stdbool.h"
-#include "stdint.h"
-#include "stdio.h"
-#include "stdlib.h"
-#include "string.h"
+#include <stdbool.h>
+#include <stdint.h>
 
 #define dt 0.1
 #define Kp 0.3

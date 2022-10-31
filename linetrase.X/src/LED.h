@@ -2,8 +2,8 @@
 #define LED_H
 
 #include "../mcc_generated_files/mcc.h"
-
-typedef struct {
+typedef struct led_t LED;
+struct led_t {
     bool _LED1;
     bool _LED2;
     bool _LED4;
